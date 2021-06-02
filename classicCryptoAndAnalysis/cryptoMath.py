@@ -123,7 +123,6 @@ class SemiPrime():
         # Start the brute force checking.
         else:
 
-            
             # Skipping every other "even" number go through up to 
             # the square root of x (plus rounding factor).
             for n in range(3, int(np.sqrt(float(x)))+2, 2):

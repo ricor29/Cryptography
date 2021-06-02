@@ -5,7 +5,7 @@ from random import randrange, getrandbits
 
 
 def gcd(x,y):
-    ''' Euclid's Greatest Common Divisor algorith to find the 
+    ''' Euclid's Greatest Common Divisor algorithm to find the 
         largest number that divides both x and y.
         
         INPUTS: 
@@ -23,7 +23,68 @@ def gcd(x,y):
     return x
 
 
+def eulPhi(n):
+    ''' Calculate the number of coprimes in range 1 to n.'''
+    
+    # Initialise the counter.
+    nFound = 0
+    
+    # Simple check every number if gcd is 1 and if yes then add to the counter.
+    for k in range(1, n+1): # +1 as strictly speaking the formula is to include n.
+        if gcd(n,k) == 1:
+            nFound += 1
+  
+    return nFound
 
+
+class FermatLittleTheorem():
+    ''' Class to compute the modular inverse.'''
+    
+    def extendedGcd(self, a,b):
+        ''' Extended Euclid's Greatest Common Divisor algorithm to find the 
+            largest number that divides both a and b.
+
+            INPUTS: 
+                a - an integer.
+                b - an integer.
+
+            OUTPUTS:
+                g - the greatest common divisor.
+                * - the coefficients of Bézout's identity, which are integers x and y such that a x + b y = gcd(a, b).
+        '''
+
+        # Iteratively go through switching the input order and also 
+        # performing mod for second input.
+        if a == 0:
+            return (b, 0, 1)
+        else:
+            g, y, x = self.extendedGcd(b % a, a)
+            return(g, x - (b//a)*y, y)
+
+
+    def modInverse(self, a, m):
+        ''' Modular inverse aa−1≡1(mod m)
+
+            INPUTS: 
+                a - the integer number a
+                m - the modulo m
+
+            OUTPUTS:
+                modularInverse - None if doesn't exist or value if it does.
+        '''        
+        
+        
+        # Check if inverse exists and if it does return
+        g, x, y = self.extendedGcd(a,m)
+        
+        if g != 1:
+            print("GCD must equal 1 for an inverse to exist!")
+            return None
+        else:
+            print("This assumes a and m are coprime (i.e. no common divisor except 1 exists).")
+            return x % m
+    
+    
 class SemiPrime():
     ''' Class to generate two primes that can form a semi-prime. '''
 
@@ -132,19 +193,6 @@ class SemiPrime():
         print(secondPrime)
 
         return firstPrime, secondPrime
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
 
 
 
